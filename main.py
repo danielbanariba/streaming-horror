@@ -1,12 +1,14 @@
 from fastapi import FastAPI, Request, Header
 from fastapi.responses import HTMLResponse, FileResponse, StreamingResponse, Response
 from fastapi.staticfiles import StaticFiles
+from routers import reproductor
 from os import getcwd, path
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+app.include_router(reproductor.router)
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
